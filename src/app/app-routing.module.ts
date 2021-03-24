@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -11,11 +12,21 @@ const routes: Routes = [
     data: {
       title: 'Home'
     },
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: 'clientes',
+        loadChildren: () => import('./views/clientes/clientes.module').then(m => m.ClientesModule)
+      },
+    ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }) ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule { }
